@@ -10,6 +10,8 @@ A sophisticated React + FastAPI application for NBA player analytics with advanc
 - **Risk Overview**: At-a-glance injury risk metrics
 - **Weather Integration**: Environmental impact analysis
 - **Player Cards**: Interactive player profiles with risk indicators
+  
+<img width="1913" height="935" alt="Screenshot 2025-10-24 015224" src="https://github.com/user-attachments/assets/8d1a3919-354a-4782-aea6-8b499f0d90df" />
 
 ### Advanced Analytics
 
@@ -25,6 +27,9 @@ A sophisticated React + FastAPI application for NBA player analytics with advanc
 - **Injury History**: Detailed injury timeline and severity tracking
 - **Performance Charts**: Visual representation of recent games
 - **Risk Breakdown**: Environmental, workload, and biomechanical factors
+
+<img width="1915" height="936" alt="Screenshot 2025-10-24 015242" src="https://github.com/user-attachments/assets/7d114bd3-3106-49a9-a8da-0dd0c6bd67a1" />
+
 
 ### Injury Prediction Engine
 
