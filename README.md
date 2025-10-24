@@ -1,46 +1,209 @@
-# Getting Started with Create React App
+# SportsOnCourts – NBA Injury Prediction Suite
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A sophisticated React + FastAPI application for NBA player analytics with advanced injury prediction based on environmental, biomechanical, and workload factors.
 
-## Available Scripts
+## 🌟 Features
 
-In the project directory, you can run:
+### Dashboard
 
-### `npm start`
+- **Real-time Statistics**: Live NBA player data via nba_api
+- **Risk Overview**: At-a-glance injury risk metrics
+- **Weather Integration**: Environmental impact analysis
+- **Player Cards**: Interactive player profiles with risk indicators
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Advanced Analytics
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Position-based Risk Analysis**: Compare injury risks across positions
+- **Seasonal Trends**: Track injury patterns throughout the season
+- **Team Comparisons**: Analyze risk levels by team
+- **Risk Factor Radar**: Multi-dimensional risk assessment
+- **League-wide Insights**: Trending injury types and prevention strategies
 
-### `npm test`
+### Player Profiles
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Career Statistics**: Comprehensive player performance data
+- **Injury History**: Detailed injury timeline and severity tracking
+- **Performance Charts**: Visual representation of recent games
+- **Risk Breakdown**: Environmental, workload, and biomechanical factors
 
-### `npm run build`
+### Injury Prediction Engine
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Multi-factor Analysis**:
+  - Environmental conditions (temperature, humidity)
+  - Workload metrics (minutes played, game frequency)
+  - Biomechanical factors (flexibility, fatigue index)
+  - Historical injury data
+- **Risk Levels**: Low, Medium, High with percentage scores
+- **Recommendations**: Personalized injury prevention strategies
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🚀 Quick Start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Prerequisites
 
-### `npm run eject`
+- Node.js 16+
+- Python 3.8+
+- npm or yarn
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Installation
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. **Clone the repository**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+   ```bash
+   git clone <your-repo-url>
+   cd courtvision-analytics
+   ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+2. **Install frontend dependencies**
 
-## Learn More
+   ```bash
+   npm install
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. **Install backend dependencies**
+   ```bash
+   cd backend
+   pip install -r requirements.txt
+   cd ..
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Running the Application
+
+**Option 1: Run both frontend and backend together**
+
+```bash
+npm run dev
+```
+
+**Option 2: Run separately**
+
+Terminal 1 - Backend:
+
+```bash
+cd backend
+python -m uvicorn main:app --reload --port 8000
+```
+
+Terminal 2 - Frontend:
+
+```bash
+npm start
+```
+
+Access the application at http://localhost:3000
+
+## 🔧 API Endpoints
+
+### Player Management
+
+- `GET /players` - List NBA players with filtering
+- `GET /player/{player_id}/career` - Get career statistics
+- `GET /player/{player_id}/injury-history` - Get injury history
+
+### Team Data
+
+- `GET /teams` - List all NBA teams
+
+### Predictions
+
+- `POST /predict_injury` - Advanced injury risk prediction
+  ```json
+  {
+    "player_id": 123,
+    "temperature": 72.0,
+    "humidity": 50.0,
+    "minutes_played": 35.0,
+    "games_in_last_week": 3,
+    "previous_injuries": 1
+  }
+  ```
+
+### Analytics
+
+- `GET /analytics/league-trends` - League-wide injury trends
+- `GET /weather/{city}` - Weather data for NBA cities
+
+## 🏗 Architecture
+
+### Frontend (React + TypeScript)
+
+```
+src/
+├── components/         # Reusable UI components
+│   ├── PlayerCard.tsx
+│   ├── InjuryRiskChart.tsx
+│   ├── WeatherPanel.tsx
+│   └── StatsOverview.tsx
+├── pages/             # Page components
+│   ├── PlayerProfile.tsx
+│   └── Analytics.tsx
+├── store/             # State management (Zustand)
+│   └── useNBAStore.ts
+└── api/               # API integration
+    └── axios.ts
+```
+
+### Backend (FastAPI)
+
+```
+backend/
+├── main.py            # API endpoints and logic
+├── requirements.txt   # Python dependencies
+└── start.bat/ps1     # Startup scripts
+```
+
+## 🛠 Technologies
+
+### Frontend
+
+- React 19 with TypeScript
+- Tailwind CSS for styling
+- Recharts for data visualization
+- React Router for navigation
+- Zustand for state management
+- Axios for API calls
+- Lucide React for icons
+
+### Backend
+
+- FastAPI for REST API
+- nba_api for NBA data
+- Pydantic for data validation
+- CORS middleware for cross-origin requests
+
+## 📊 Data Sources
+
+- **NBA Statistics**: Official NBA data via nba_api
+- **Weather Data**: Mock data (ready for OpenWeatherMap integration)
+- **Injury Predictions**: Advanced mock ML model (ready for real ML integration)
+
+## 🔐 Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+REACT_APP_API_BASE=http://localhost:8000
+REACT_APP_WEATHER_API_KEY=your_openweather_api_key
+```
+
+## 🚧 Future Enhancements
+
+- [ ] Real ML model integration for injury predictions
+- [ ] Live weather API integration
+- [ ] Player comparison features
+- [ ] Historical trend analysis
+- [ ] Export reports functionality
+- [ ] Mobile responsive improvements
+- [ ] Real-time game data integration
+- [ ] Team management dashboard
+
+## 📝 License
+
+MIT License
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📞 Support
+
+For issues and questions, please open an issue on GitHub.
