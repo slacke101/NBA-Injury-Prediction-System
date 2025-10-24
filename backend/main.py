@@ -58,6 +58,49 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ---------------- Helper: fetch active roster once and cache ----------------
+
+_roster_cache: list | None = None  # module-level cache
+
+
+async def _download_roster() -> list:
+    """Download full active roster from NBA CDN."""
+    url = "https://cdn.nba.com/static/json/staticData/squad/active_players.json"
+    async with httpx.AsyncClient(timeout=10) as client:
+        resp = await client.get(url)
+        resp.raise_for_status()
+        data = resp.json()
+    return data.get("league", {}).get("standard", [])
+
+
+def get_full_active_players() -> list:
+    """Return cached active-player list, with nba_api fallback."""
+    global _roster_cache
+    if _roster_cache is not None:
+        return _roster_cache
+
+    import asyncio
+
+    try:
+        loop = asyncio.get_event_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
+    try:
+        _roster_cache = loop.run_until_complete(_download_roster())
+        if not _roster_cache:
+            raise ValueError("Empty roster from CDN")
+    except Exception:
+        from nba_api.stats.static import players as _ps
+
+        _roster_cache = _ps.get_players()
+
+    return _roster_cache
+
+
+# ---------------------------------------------------------------------------
+
 
 # Pydantic models for request/response
 # Deprecated InjuryPredictionRequest for now – we accept query params to simplify front-end calls
@@ -96,37 +139,6 @@ async def root():
 async def list_players(active_only: bool = True, limit: int = 0):
     """Return list of NBA players (basic static data)."""
     # Fetch full active roster from NBA CDN (over 500 players). Fallback to nba_api static list.
-    import asyncio, functools
-
-    _roster_cache: list | None = None
-
-    async def _download_roster() -> list:
-        url = "https://cdn.nba.com/static/json/staticData/squad/active_players.json"
-        async with httpx.AsyncClient(timeout=10) as client:
-            resp = await client.get(url)
-            resp.raise_for_status()
-            data = resp.json()
-        return data.get("league", {}).get("standard", [])
-
-    def get_full_active_players() -> list:
-        global _roster_cache
-        if _roster_cache is not None:
-            return _roster_cache
-        try:
-            loop = asyncio.get_event_loop()
-        except RuntimeError:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-        try:
-            _roster_cache = loop.run_until_complete(_download_roster())
-            if not _roster_cache:
-                raise ValueError("Empty roster from CDN")
-        except Exception:
-            from nba_api.stats.static import players as _ps
-
-            _roster_cache = _ps.get_players()
-        return _roster_cache
-
     all_players = get_full_active_players()
     if active_only:
         all_players = [
