@@ -36,60 +36,49 @@ A sophisticated React + FastAPI application for NBA player analytics with advanc
 - **Risk Levels**: Low, Medium, High with percentage scores
 - **Recommendations**: Personalized injury prevention strategies
 
-## 🚀 Quick Start
+## 🏃‍♀️ Quick Start
 
-### Prerequisites
-
-- Node.js 16+
-- Python 3.8+
-- npm or yarn
-
-### Installation
-
-1. **Clone the repository**
+1. **Fork & Clone**
 
    ```bash
-   git clone <your-repo-url>
-   cd courtvision-analytics
+   git clone https://github.com/<your-user>/NBA-Injury-Prediction-System.git NBA
+   cd NBA              # top-level folder created by the clone
    ```
 
-2. **Install frontend dependencies**
+2. **Install dependencies** (run once):
 
    ```bash
-   npm install
-   ```
-
-3. **Install backend dependencies**
-   ```bash
+   cd nba-analysis
+   npm install          # installs React/Tailwind deps
    cd backend
-   pip install -r requirements.txt
-   cd ..
+   pip install -r requirements.txt   # installs FastAPI deps
+   cd ..                # back to nba-analysis root
    ```
 
-### Running the Application
+3. **Run the app locally (separate terminals):**
 
-**Option 1: Run both frontend and backend together**
+   **Backend**
 
-```bash
-npm run dev
-```
+   ```bash
+   cd nba-analysis/backend
+   python -m uvicorn main:app --reload --port 8000
+   ```
 
-**Option 2: Run separately**
+   **Frontend** (new terminal)
 
-Terminal 1 - Backend:
+   ```bash
+   cd nba-analysis
+   npm run dev          # Vite dev server on http://localhost:5173
+   ```
 
-```bash
-cd backend
-python -m uvicorn main:app --reload --port 8000
-```
+Open `http://localhost:5173` in your browser.
 
-Terminal 2 - Frontend:
+### 🖼 What You’ll See
 
-```bash
-npm start
-```
-
-Access the application at http://localhost:3000
+- **Dashboard** – stats overview, live weather panel, injury-risk donut & bar charts.
+- **Players** – searchable table with zebra rows, risk badges, and quick filters.
+- **Analytics** – points leaderboard, risk distribution pie, seasonal trend line, radar of factor scores.
+- **Player Profile** – head-to-toe bio, game logs, shot chart, and individual risk read-out.
 
 ## 🔧 API Endpoints
 
@@ -205,5 +194,7 @@ MIT License
 Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📞 Support
+
+For issues and questions, please open an issue on GitHub.
 
 For issues and questions, please open an issue on GitHub.
